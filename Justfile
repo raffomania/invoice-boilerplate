@@ -1,9 +1,8 @@
 build:
-	deno run --allow-read --allow-write render.ts
-	wkhtmltopdf output.html output.pdf
+	pandoc -f markdown -o output.pdf --template=template.tex --pdf-engine=xelatex details.yml
 
 watch:
-	watchexec -e yml,html,ts,css --no-project-ignore -i 'html2pdf*' -i 'output.*' 'just build'
+	watchexec -e yml,tex 'just build'
 
 clean:
-	rm output.pdf output.html
+	rm output.pdf

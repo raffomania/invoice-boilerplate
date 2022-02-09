@@ -1,0 +1,186 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[$fontsize$, a4paper]{article}
+
+% LAYOUT
+%--------------------------------
+\usepackage{geometry} 
+\geometry{$geometry$}
+
+% footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+% No page numbers
+\pagenumbering{gobble}
+
+% Left align
+\usepackage[document]{ragged2e}
+
+$if(letterhead)$
+  % To include the letterhead
+  \usepackage{wallpaper}
+  \ULCornerWallPaper{1}{letterhead.pdf}
+$endif$
+
+% TYPOGRAPHY
+%--------------------------------
+\usepackage{fontspec} 
+\usepackage{xunicode}
+\usepackage{xltxtra}
+
+% converts LaTeX specials (quotes, dashes etc.) to Unicode
+\defaultfontfeatures{Mapping=tex-text}
+\setromanfont [Ligatures={Common}, Numbers={OldStyle}]{$seriffont$}
+\setsansfont[Scale=0.9]{$sansfont$}
+
+% Set paragraph break
+\setlength{\parskip}{1em}
+
+% Custom ampersand
+\newcommand{\amper}{{\fontspec[Scale=.95]{$seriffont$}\selectfont\itshape\&}}
+
+$if(seriffont)$
+\setmainfont[SmallCapsFeatures={LetterSpace=5,Letters=SmallCaps}]{$seriffont$}
+$endif$
+$if(sansfont)$
+    \setsansfont{$sansfont$}
+$endif$
+
+% Command required by how Pandoc handles the list conversion
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% TABLE CUSTOMIZATION
+%--------------------------------
+\usepackage{spreadtab}
+\usepackage[compact]{titlesec} % For customizing title sections
+\titlespacing*{\section}{0pt}{3pt}{-7pt} % Remove margin bottom from the title
+\usepackage{arydshln} % For the dotted line on the table
+\renewcommand{\arraystretch}{1.5} % Apply vertical padding to table cells
+\usepackage{hhline} % For single-cell borders
+\usepackage{enumitem} % For customizing lists
+\setlist{nolistsep} % No whitespace around list items
+\setlist[itemize]{leftmargin=0.5cm} % Reduce list left indent
+\setlength{\tabcolsep}{9pt} % Larger gutter between columns
+
+
+% LANGUAGE
+%--------------------------------
+$if(lang)$
+\usepackage[$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$endif$
+
+% PDF SETUP
+%--------------------------------
+\usepackage[xetex, bookmarks, colorlinks, breaklinks]{hyperref}
+\hypersetup
+{
+  pdfauthor={$author$},
+  pdfsubject=Rechnung Nr. $invoice-nr$,
+  pdftitle=Rechnung Nr. $invoice-nr$,
+  linkcolor=blue,
+  citecolor=blue,
+  filecolor=black,
+  urlcolor=blue
+}
+
+% To display custom date
+% \usepackage[nodayofweek]{datetime}
+% \newdate{date}{01}{12}{1867}
+% \date{\displaydate{date}}
+% Use this instead of \today: % \displaydate{date}
+
+% DOCUMENT
+%--------------------------------
+\begin{document}
+\small
+\textsc{\textbf{$author$}} \\
+$for(from)$
+\textsc{$from$}
+$sep$
+\textbullet{} 
+$endfor$
+
+\vspace{1em}
+
+\normalsize \sffamily
+$for(to)$
+$to$\\
+$endfor$
+
+\vspace{6em}
+
+\begin{flushright}
+  \small
+  $city$, \today
+\end{flushright}
+
+\section*{\textsc{Rechnung} \textsc{\#$invoice-nr$}}
+
+\vspace{18mm}
+
+\small
+$intronote$
+
+\medskip
+
+\footnotesize
+\newcounter{pos}
+\setcounter{pos}{0}
+\STautoround*{2} % Get spreadtab to always display the decimal part
+$if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
+
+\begin{spreadtab}{{tabular}{lp{4.2cm}rrr}}
+  \hdashline[1pt/1pt]
+  @ \noalign{\vskip 2mm} \textbf{Pos.} & @ \textbf{Aktivität} & @ \textbf{$currency$/Einheit} & @ \textbf{Anzahl} & @ \textbf{Preis in $currency$} \\ \hline
+      $for(service)$ @ \noalign{\vskip 2mm} \refstepcounter{pos} \thepos 
+        & @ $service.description$ 
+        $if(service.details)$\newline \begin{itemize} 
+          $for(service.details)$\scriptsize \item $service.details$ 
+          $endfor$ \end{itemize}
+        $endif$ & $service.per_hour$ & $service.hours$ & [-1,0]*[-2,0] \\
+      $endfor$ \noalign{\vskip 2mm} \hline
+  $if(VAT)$
+    @ & @ & @ \multicolumn{2}{r}{Summe Honorare:}                & :={sum(e1:[0,-1])} \\ \hhline{~~~~-}
+    @ & @ & @ \multicolumn{2}{r}{Umsatzsteuer $VAT$\%:}               & $VAT$/100*[0,-1] \\ \hhline{~~~~-}
+  $endif$
+  @ & @ & @ \multicolumn{2}{r}{\textbf{Gesamtsumme:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\
+\end{spreadtab}
+
+
+\vspace{15mm}
+
+\sffamily
+\small
+$closingnote$
+
+\medskip
+
+\IfFileExists{signature.jpg}
+{
+      \includegraphics[height=3.5\baselineskip]{signature.jpg} \par
+}
+
+$author$
+
+\lfoot{
+\sffamily
+\small
+$for(tax_info)$
+  $tax_info$ \\
+$endfor$
+}
+
+\rfoot{
+\sffamily
+\small
+$for(bank_info)$
+  $bank_info$ \\
+$endfor$
+}
+
+\end{document}

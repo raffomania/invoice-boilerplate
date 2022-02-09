@@ -1,16 +1,8 @@
-# Travel Expense Boilerplate
+# Invoice Boilerplate
 
-Automatically generate german travel expense report for freelances from a YAML file.
+Simple automated LaTeX invoicing system for freelancers.
 
-## Setup
-
-Install dependencies:
-
-- [just](https://github.com/casey/just/)
-- [deno](https://deno.land/)
-- [wkthmltopdf](https://wkhtmltopdf.org/)
-
-Run `just build` to generate `output.html` and `output.pdf`.
+This is forked from https://github.com/mrzool/invoice-boilerplate, translated to german and modified to suit my personal requirements.
 
 ## License
 

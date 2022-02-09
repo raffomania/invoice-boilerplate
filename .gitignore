@@ -1,4 +1,3 @@
-output.*
+output.pdf
 details.yml
 signature.*
-.vscode

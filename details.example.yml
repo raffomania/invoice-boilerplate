@@ -1,19 +1,59 @@
+---
+invoice-nr: 2015-11-04
 author: Max Mustermann
-company: Max Mustermann
-date: 08.02.2022
-start_date: 01.02.2022
-end_date: 28.02.2022
-city: Bielefeld
-title: Reisekostenabrechnung
+city: Musterstadt
+from:
+- Musterstraße 37
+- 12345 Musterstadt
+to:
+- Erika Mustermann
+- Musterallee 1
+- 12345 Musterstadt
+- Germany
+tax_info:
+  - 'Tax ID: 12121212121'
+bank_info:
+  - 'IBAN: 9393939393939'
+  - 'BIC: EU12121212'
+VAT: 20
+service:
+- description: The first service provided
+  per_hour: 20
+  hours: 50
+  details:
+- description: And another one, with a list of details
+  per_hour: 50
+  hours: 10
+  details:
+    - Some more detailed explanation
+    - of the service provided
+    - Looking good
 
-entries:
-    - index: 1
-      date: 01.01.
-      start_time: "09:00"
-      end_time: "18:00"
-      subject: Präsentation bei Konferenz Foobar
-      hours: 9
-      km: 10
-      food_money: 14
+intronote: |
+  Dear Customer, 
+  please find the bill for the recently provided services below.
 
-signature_image: signature.jpg
+closingnote: |
+  Please transfer the due amount to the following bank account within the next 14 days:
+   
+    Mustermann GmbH  
+    Kreditinstitut: Deutsche Postbank AG  
+    IBAN: DE18 3601 0043 9999 9999 99  
+    BIC: PBNKDEFF  
+
+    We really appreciate your business and look forward to future projects together.
+
+    Best regards,
+
+# Invoice settings
+currency: EUR
+# commasep: true
+lang: en-GB
+
+# Typography and layout
+seriffont: Vollkorn
+sansfont: Noto Sans
+fontsize: 10pt
+geometry: a4paper, left=43mm, right=43mm, top=51mm, bottom=17mm
+# letterhead: true # To include personalized letterheads
+---
