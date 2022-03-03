@@ -6,3 +6,6 @@ watch:
 
 clean:
 	rm output.pdf
+
+send:
+	deno run --allow-read=.env,.env.defaults,.env.example,output.pdf --allow-env --allow-net send_mail.ts
