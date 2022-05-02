@@ -1,4 +1,0 @@
-#!/bin/sh
-set -euo pipefail
-
-pandoc -f markdown -o "$2" --template="$(dirname $0)/template.tex" --pdf-engine=xelatex "$1"
