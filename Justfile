@@ -1,5 +1,5 @@
 build file='details.yml':
-	pandoc -f markdown -o output.pdf --template=template.tex --pdf-engine=xelatex '{{file}}'
+	bin/render-invoice output.pdf "{{file}}"
 
 watch:
 	watchexec -e yml,tex 'just build'
