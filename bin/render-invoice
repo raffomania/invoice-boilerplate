@@ -1,7 +1,13 @@
-#!/bin/sh
-set -euxo pipefail
+#!/usr/bin/oil
+shopt --set xtrace
 
-file="$(realpath $1)"
-output="$(realpath $2)"
+var file = "$(realpath $1)"
+var output = "$(echo $file | sed -e 's/\.yml$/\.pdf/')"
+var invoice_number = "$(basename $file | grep -E -o '[0-9]{4}\-[0-9]{4}' -)"
+echo $invoice_number
+if ! boolstatus grep $invoice_number $file {
+    echo "invoice number $invoice_number not found in $(basename $file)"
+    exit 1
+}
 cd "$(dirname $0)/.."
 pandoc -f markdown -o "$output" --template="template.tex" --pdf-engine=xelatex "$file"
