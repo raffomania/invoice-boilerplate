@@ -1,0 +1,8 @@
+#!/usr/bin/oil
+shopt --set xtrace
+
+var file = "$(realpath $1)"
+var output = "$(echo $file | sed -e 's/\.yml$/\.pdf/')"
+
+cd "$(dirname $0)/.."
+pandoc -f markdown -o "$output" --template="template.tex" --pdf-engine=xelatex "$file"

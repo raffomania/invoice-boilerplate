@@ -80,8 +80,8 @@ $endif$
 \hypersetup
 {
   pdfauthor={$author$},
-  pdfsubject=Rechnung Nr. $invoice-nr$,
-  pdftitle=Rechnung Nr. $invoice-nr$,
+  pdfsubject=$title$$if(invoice-nr)$ Nr. $invoice-nr$$endif$,
+  pdftitle=$title$$if(invoice-nr)$ Nr. $invoice-nr$$endif$,
   linkcolor=blue,
   citecolor=blue,
   filecolor=black,
@@ -119,7 +119,7 @@ $endfor$
   $city$, \today
 \end{flushright}
 
-\section*{\textsc{Rechnung} \textsc{\#$invoice-nr$}}
+\section*{\textsc{$title$}$if(invoice-nr)$ \textsc{\#$invoice-nr$}$endif$}
 
 \vspace{18mm}
 
