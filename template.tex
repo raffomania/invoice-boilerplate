@@ -160,10 +160,14 @@ $closingnote$
 
 \medskip
 
+$if(skipsignature)$
+\vspace{3.5\baselineskip}
+$else$
 \IfFileExists{signature.jpg}
 {
       \includegraphics[height=3.5\baselineskip]{signature.jpg} \par
 }
+$endif$
 
 $author$
 
