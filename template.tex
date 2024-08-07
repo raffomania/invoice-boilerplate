@@ -72,6 +72,7 @@ $endif$
 %--------------------------------
 $if(lang)$
 \usepackage[$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+\usepackage{translator}
 $endif$
 
 % PDF SETUP
@@ -134,9 +135,22 @@ $intronote$
 \STautoround*{2} % Get spreadtab to always display the decimal part
 $if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
 
+\newtranslation[to=English]{Pos.}{Pos.}
+\newtranslation[to=English]{Aktivität}{Activity}
+\newtranslation[to=English]{Einheit}{Unit}
+\newtranslation[to=English]{Anzahl}{Count}
+\newtranslation[to=English]{Preis in}{Total in}
+\newtranslation[to=English]{Summe Honorare}{Subtotal}
+\newtranslation[to=English]{Umsatzsteuer}{VAT}
+\newtranslation[to=English]{Gesamtsumme}{Total}
+
 \begin{spreadtab}{{tabular}{lp{4.2cm}rrr}}
   \hdashline[1pt/1pt]
-  @ \noalign{\vskip 2mm} \textbf{Pos.} & @ \textbf{Aktivität} & @ \textbf{$currency$/Einheit} & @ \textbf{Anzahl} & @ \textbf{Preis in $currency$} \\ \hline
+  @ \noalign{\vskip 2mm} \textbf{\translate{Pos.}} & 
+  @ \textbf{\translate{Aktivität}} & 
+  @ \textbf{$currency$/\translate{Einheit}} & 
+  @ \textbf{\translate{Anzahl}} & 
+  @ \textbf{\translate{Preis in} $currency$} \\ \hline
       $for(service)$ @ \noalign{\vskip 2mm} \refstepcounter{pos} \thepos 
         & @ $service.description$ 
         $if(service.details)$\newline \begin{itemize} 
@@ -145,10 +159,10 @@ $if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
         $endif$ & $service.per_hour$ & $service.hours$ & [-1,0]*[-2,0] \\
       $endfor$ \noalign{\vskip 2mm} \hline
   $if(VAT)$
-    @ & @ & @ \multicolumn{2}{r}{Summe Honorare:}                & :={sum(e1:[0,-1])} \\ \hhline{~~~~-}
-    @ & @ & @ \multicolumn{2}{r}{Umsatzsteuer $VAT$\%:}               & $VAT$/100*[0,-1] \\ \hhline{~~~~-}
+    @ & @ & @ \multicolumn{2}{r}{\translate{Summe Honorare}:}                & :={sum(e1:[0,-1])} \\ \hhline{~~~~-}
+    @ & @ & @ \multicolumn{2}{r}{\translate{Umsatzsteuer} $VAT$\%:}               & $VAT$/100*[0,-1] \\ \hhline{~~~~-}
   $endif$
-  @ & @ & @ \multicolumn{2}{r}{\textbf{Gesamtsumme:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\
+  @ & @ & @ \multicolumn{2}{r}{\textbf{\translate{Gesamtsumme}:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\
 \end{spreadtab}
 
 
