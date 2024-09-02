@@ -162,7 +162,7 @@ $if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
     @ & @ & @ \multicolumn{2}{r}{\translate{Summe Honorare}:}                & :={sum(e1:[0,-1])} \\ \hhline{~~~~-}
     @ & @ & @ \multicolumn{2}{r}{\translate{Umsatzsteuer} $VAT$\%:}               & $VAT$/100*[0,-1] \\ \hhline{~~~~-}
   $endif$
-  @ & @ & @ \multicolumn{2}{r}{\textbf{\translate{Gesamtsumme}:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\
+  @ & @ & @ \multicolumn{2}{r}{\textbf{\translate{Gesamtsumme}:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(e1:[0,-1])$endif$}} \\
 \end{spreadtab}
 
 
