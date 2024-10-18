@@ -72,7 +72,7 @@ $endif$
 %--------------------------------
 $if(lang)$
 \usepackage[$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
-\usepackage{translator}
+\usepackage[$babel-lang$]{translator}
 $endif$
 
 % PDF SETUP
@@ -134,6 +134,15 @@ $intronote$
 \setcounter{pos}{0}
 \STautoround*{2} % Get spreadtab to always display the decimal part
 $if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
+
+\newtranslation[to=German]{Pos.}{Pos.}
+\newtranslation[to=German]{Aktivität}{Aktivität}
+\newtranslation[to=German]{Einheit}{Einheit}
+\newtranslation[to=German]{Anzahl}{Anzahl}
+\newtranslation[to=German]{Preis in}{Preis in}
+\newtranslation[to=German]{Summe Honorare}{Summe Honorare}
+\newtranslation[to=German]{Umsatzsteuer}{Umsatzsteuer}
+\newtranslation[to=German]{Gesamtsumme}{Gesamtsumme}
 
 \newtranslation[to=English]{Pos.}{Pos.}
 \newtranslation[to=English]{Aktivität}{Activity}
